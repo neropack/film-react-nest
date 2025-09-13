@@ -14,7 +14,7 @@ import { FilmsModule } from './films/films.module';
     }),
     // @todo: Добавьте раздачу статических файлов из public
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'public'),
+      rootPath: path.join(__dirname, '..', 'public', 'content', 'afisha'),
       serveRoot: '/content/afisha',
     }),
     FilmsModule,
