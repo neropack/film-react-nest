@@ -6,12 +6,12 @@ export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
   @Get()
-  getFilms() {
-    return 'List of all films';
+  async getFilms() {
+    return this.filmsService.getAllFilms();
   }
 
   @Get(':id/schedule')
-  getFilmSchedule(@Param('id') id: string) {
+  async getFilmSchedule(@Param('id') id: string) {
     return `Schedule for film with id ${id}`;
   }
 }

@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as path from 'node:path';
 
 import { configProvider } from './app.config.provider';
+import { FilmsModule } from './films/films.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { configProvider } from './app.config.provider';
       rootPath: path.join(__dirname, '..', 'public'),
       serveRoot: '/content/afisha',
     }),
-    // @todo: сделать модули для films и order
+    FilmsModule,
   ],
   controllers: [],
   providers: [configProvider],
