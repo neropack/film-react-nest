@@ -8,10 +8,10 @@ export class FilmsRepository {
   }
 
   async findById(id: string): Promise<Film | null> {
-    return FilmModel.findById(id).exec();
+    return FilmModel.findOne({ id }).lean().exec();
   }
 
   async updateFilm(film: Film): Promise<Film> {
-    return FilmModel.findByIdAndUpdate(film._id, film, { new: true }).exec();
+    return FilmModel.findByIdAndUpdate(film.id, film, { new: true }).exec();
   }
 }
