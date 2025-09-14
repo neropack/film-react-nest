@@ -12,6 +12,12 @@ export class FilmsRepository {
   }
 
   async updateFilm(film: Film): Promise<Film> {
-    return FilmModel.findByIdAndUpdate(film.id, film, { new: true }).exec();
+    return FilmModel.findOneAndUpdate(
+      { id: film.id },
+      { schedule: film.schedule },
+      { new: true },
+    )
+      .lean()
+      .exec();
   }
 }
