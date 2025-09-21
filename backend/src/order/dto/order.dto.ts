@@ -50,7 +50,7 @@ export class Order extends Contacts {
   tickets: Ticket[];
 }
 
-export class OrderResult extends Ticket {
+export class TicketResult extends Ticket {
   @IsString()
   id: string;
 }
