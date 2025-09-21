@@ -27,7 +27,7 @@ export class Schedule {
   @Column('double precision')
   price: number;
 
-  @Column('text')
+  @Column('simple-array')
   taken: string[];
 
   @Column('uuid')
