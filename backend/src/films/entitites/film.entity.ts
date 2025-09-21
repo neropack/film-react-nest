@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Schedule } from "./schedule.entity";
 
 @Entity('films')
 export class Film {
@@ -29,6 +30,6 @@ export class Film {
     @Column()
     description: string;
 
-    // @OneToMany() Schedule ещё нет
-    // schedule: Schedule[];
+    @OneToMany(() => Schedule, (schedule) => schedule.film, { cascade: true })
+    schedule: Schedule[];
 }
