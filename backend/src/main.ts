@@ -4,9 +4,9 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 
 async function bootstrap() {
-  await mongoose.connect(process.env.DATABASE_URL).then(() => {
-    console.log('DB connected');
-  });
+  // await mongoose.connect(process.env.DATABASE_URL).then(() => {
+  //   console.log('DB connected');
+  // });
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/afisha');
   app.enableCors();
