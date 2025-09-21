@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as path from 'node:path';
 
 import { configProvider } from './app.config.provider';
@@ -23,18 +23,21 @@ import { Schedule } from './films/entitites/schedule.entity';
     }),
     FilmsModule,
     OrderModule,
-    TypeOrmModule.forRoot({
-      type: (process.env.DATABASE_TYPE as 'postgres') || 'postgres',
-      host: process.env.DATABASE_HOST.trim(),
-      port: parseInt(process.env.DATABASE_PORT.trim()) || 5432,
-      username: process.env.DATABASE_USERNAME.trim(),
-      password: process.env.DATABASE_PASSWORD.trim(),
-      database: process.env.DATABASE_NAME.trim(),
-      entities: [Film, Schedule],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: configService.get<number>('DATABASE_PORT'),
+        username: configService.get<string>('DATABASE_USERNAME'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        database: configService.get<string>('DATABASE_NAME'),
+        entities: [Film, Schedule],
+        synchronize: true,
+      }),
+      inject: [ConfigService]
     }),
   ],
   controllers: [],
   providers: [configProvider],
 })
-export class AppModule {}
+export class AppModule { }
