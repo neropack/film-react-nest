@@ -1,24 +1,56 @@
+import { IsArray, IsEmail, IsInt, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, Min, ValidateNested } from "class-validator";
+import { Type } from 'class-transformer';
+
 //TODO реализовать DTO для /orders
-export interface Ticket {
+export class Ticket {
+  @IsString()
+  @IsNotEmpty()
   film: string;
+
+  @IsString()
+  @IsNotEmpty()
   session: string;
+
+  @IsString()
   daytime: string;
+
+  @IsString()
   day: string;
+
+  @IsString()
   time: string;
+
+  @IsInt()
+  @Min(1)
   row: number;
+
+  @IsInt()
+  @Min(1)
   seat: number;
+
+  @IsNumber()
   price: number;
 }
 
-export interface Contacts {
+export class Contacts {
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
+
+  @IsPhoneNumber()
+  @IsNotEmpty()
   phone: string;
 }
 
-export interface Order extends Contacts {
+export class Order extends Contacts {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Ticket)
+  @IsNotEmpty()
   tickets: Ticket[];
 }
 
-export interface OrderResult extends Ticket {
+export class OrderResult extends Ticket {
+  @IsString()
   id: string;
 }
