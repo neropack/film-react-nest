@@ -26,7 +26,7 @@ import { Schedule } from './films/entitites/schedule.entity';
     TypeOrmModule.forRoot({
       type: (process.env.DATABASE_TYPE as 'postgres') || 'postgres',
       host: process.env.DATABASE_HOST.trim(),
-      port: parseInt(process.env.DATABASE_PORT.trim()),
+      port: parseInt(process.env.DATABASE_PORT.trim()) || 5432,
       username: process.env.DATABASE_USERNAME.trim(),
       password: process.env.DATABASE_PASSWORD.trim(),
       database: process.env.DATABASE_NAME.trim(),

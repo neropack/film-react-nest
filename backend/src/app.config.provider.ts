@@ -10,7 +10,7 @@ export const configProvider = {
       url: process.env.DATABASE_URL.trim(),
       type: (process.env.DATABASE_TYPE.trim() as 'postgres') || 'postgres',
       host: process.env.DATABASE_HOST.trim(),
-      port: parseInt(process.env.DATABASE_PORT.trim()),
+      port: parseInt(process.env.DATABASE_PORT.trim()) || 5432,
       username: process.env.DATABASE_USERNAME.trim(),
       password: process.env.DATABASE_PASSWORD.trim(),
       database: process.env.DATABASE_NAME.trim(),
