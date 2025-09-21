@@ -6,14 +6,14 @@ export const configProvider = {
   useValue: <AppConfig>{
     //TODO прочесть переменнные среды
     database: {
-      driver: process.env.DATABASE_DRIVER,
-      url: process.env.DATABASE_URL,
-      type: (process.env.DATABASE_TYPE as 'postgres') || 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
+      driver: process.env.DATABASE_DRIVER.trim(),
+      url: process.env.DATABASE_URL.trim(),
+      type: (process.env.DATABASE_TYPE.trim() as 'postgres') || 'postgres',
+      host: process.env.DATABASE_HOST.trim(),
+      port: parseInt(process.env.DATABASE_PORT.trim()),
+      username: process.env.DATABASE_USERNAME.trim(),
+      password: process.env.DATABASE_PASSWORD.trim(),
+      database: process.env.DATABASE_NAME.trim(),
     },
   },
 };
