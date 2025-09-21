@@ -7,7 +7,7 @@ export class Schedule {
     id: string;
 
     @Column()
-    daytime: Date;
+    daytime: string;
 
     @Column()
     hall: number;
@@ -18,16 +18,16 @@ export class Schedule {
     @Column()
     seats: number;
 
-    @Column()
+    @Column('double precision')
     price: number;
 
-    @Column('text', { array: true })
+    @Column('text')
     taken: string[];
 
     @Column('uuid')
-    filmid: string;
+    filmId: string;
 
     @ManyToOne(() => Film, (film) => film.schedule, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'filmid' })
+    @JoinColumn({ name: 'filmId' })
     film: Film;
 }
