@@ -8,7 +8,7 @@ export const configProvider = {
     database: {
       driver: process.env.DATABASE_DRIVER,
       url: process.env.DATABASE_URL,
-      type: process.env.DATABASE_TYPE as 'postgres' || 'postgres',
+      type: (process.env.DATABASE_TYPE as 'postgres') || 'postgres',
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,

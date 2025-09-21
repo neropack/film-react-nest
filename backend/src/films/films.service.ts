@@ -16,7 +16,6 @@ export class FilmsService {
   async getFilmSchedule(id: string) {
     const film = await this.filmRepository.findById(id);
     if (!film) throw new NotFoundException('Film not found');
-    console.log(film);
     return {
       total: film.schedule.length,
       items: film.schedule,

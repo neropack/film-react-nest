@@ -24,7 +24,7 @@ import { Schedule } from './films/entitites/schedule.entity';
     FilmsModule,
     OrderModule,
     TypeOrmModule.forRoot({
-      type: process.env.DATABASE_TYPE as 'postgres' || 'postgres',
+      type: (process.env.DATABASE_TYPE as 'postgres') || 'postgres',
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,
@@ -32,7 +32,7 @@ import { Schedule } from './films/entitites/schedule.entity';
       database: process.env.DATABASE_NAME,
       entities: [Film, Schedule],
       synchronize: true,
-    })
+    }),
   ],
   controllers: [],
   providers: [configProvider],

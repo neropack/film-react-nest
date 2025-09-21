@@ -1,4 +1,3 @@
-// src/films/schemas/film.schema.ts
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface Session extends Document {
