@@ -1,0 +1,88 @@
+services:
+  backend:
+    container_name: backend
+    image: ghcr.io/neropack/backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_TYPE: ${DATABASE_TYPE}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      LOGGER_TYPE: ${LOGGER_TYPE}
+      DEBUG: ${DEBUG}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        - condition: service_healthy
+    restart: on-failure
+    networks:
+      - app-network
+
+  frontend:
+    container_name: frontend
+    image: ghcr.io/neropack/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      VITE_API_URL: /api/afisha
+      VITE_CDN_URL: /content/afisha
+    volumes:
+      - frontend_build:/app/dist
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    build: ./frontend/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - frontend_build:/var/www
+    networks:
+      - app-network
+
+  db:
+    container_name: db
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/prac
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+  pgadmin_data:
+  frontend_build:
+
+networks:
+  app-network:
+    driver: bridge
