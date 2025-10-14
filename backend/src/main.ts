@@ -12,7 +12,9 @@ async function bootstrap() {
   app.setGlobalPrefix('api/afisha');
   app.enableCors();
 
-  const loggerType = process.env.LOGGER_TYPE || (process.env.NODE_ENV === 'development' ? 'dev' : 'tskv');
+  const loggerType =
+    process.env.LOGGER_TYPE ||
+    (process.env.NODE_ENV === 'development' ? 'dev' : 'tskv');
   let logger;
   switch (loggerType) {
     case 'dev':
@@ -28,7 +30,7 @@ async function bootstrap() {
       logger = new DevLogger();
   }
   app.useLogger(logger);
-  
+
   await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

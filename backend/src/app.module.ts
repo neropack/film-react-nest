@@ -34,10 +34,10 @@ import { Schedule } from './films/entitites/schedule.entity';
         entities: [Film, Schedule],
         synchronize: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
   controllers: [],
   providers: [configProvider],
 })
-export class AppModule { }
+export class AppModule {}

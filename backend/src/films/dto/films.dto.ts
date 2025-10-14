@@ -1,5 +1,5 @@
 //TODO описать DTO для запросов к /films'
-import { IsArray, IsNumber, IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class FilmDto {
   @IsString()

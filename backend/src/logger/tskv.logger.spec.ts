@@ -1,4 +1,3 @@
-import { ConsoleLogger } from '@nestjs/common';
 import { TskvLogger } from './tskv.logger';
 
 describe('TskvLogger', () => {
@@ -15,7 +14,9 @@ describe('TskvLogger', () => {
   });
 
   beforeEach(() => {
-    stdoutWriteSpy = jest.spyOn(process.stdout, 'write').mockImplementation(() => true);
+    stdoutWriteSpy = jest
+      .spyOn(process.stdout, 'write')
+      .mockImplementation(() => true);
     logger = new TskvLogger('TestContext');
   });
 
@@ -26,7 +27,7 @@ describe('TskvLogger', () => {
   const expectValidTskvLog = (
     expectedLevel: string,
     expectedMessage: any,
-    expectedOptionalParams: any[] = []
+    expectedOptionalParams: any[] = [],
   ) => {
     expect(stdoutWriteSpy).toHaveBeenCalledTimes(1);
     const writeArg = stdoutWriteSpy.mock.calls[0][0];
@@ -34,8 +35,11 @@ describe('TskvLogger', () => {
     expect(writeArg).toMatch(/\n$/);
 
     const escapedMessage = logger['escapeValue'](expectedMessage);
-    const escapedParams = expectedOptionalParams.map((param) => logger['escapeValue'](param));
-    const paramsPart = escapedParams.length > 0 ? `\tparams=${escapedParams.join('\t')}` : '';
+    const escapedParams = expectedOptionalParams.map((param) =>
+      logger['escapeValue'](param),
+    );
+    const paramsPart =
+      escapedParams.length > 0 ? `\tparams=${escapedParams.join('\t')}` : '';
     const expected = `timestamp=${fixedTimestamp}\tlevel=${expectedLevel}\tmessage=${escapedMessage}${paramsPart}\n`;
 
     expect(writeArg).toBe(expected);

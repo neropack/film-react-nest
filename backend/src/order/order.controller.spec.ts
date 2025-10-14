@@ -70,7 +70,9 @@ describe('OrderController', () => {
         createdAt: new Date().toISOString(),
       };
 
-      (mockOrderService.createOrder as jest.Mock).mockResolvedValue(mockOrderResult);
+      (mockOrderService.createOrder as jest.Mock).mockResolvedValue(
+        mockOrderResult,
+      );
 
       const result = await controller.createOrder(createOrderDto);
 
@@ -111,7 +113,9 @@ describe('OrderController', () => {
         createdAt: new Date().toISOString(),
       };
 
-      (mockOrderService.createOrder as jest.Mock).mockResolvedValue(mockOrderResult);
+      (mockOrderService.createOrder as jest.Mock).mockResolvedValue(
+        mockOrderResult,
+      );
 
       const result = await controller.createOrder(createOrderDto);
 

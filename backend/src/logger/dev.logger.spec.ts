@@ -6,7 +6,9 @@ describe('DevLogger', () => {
   let consoleLogSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(ConsoleLogger.prototype, 'log').mockImplementation(() => {});
+    consoleLogSpy = jest
+      .spyOn(ConsoleLogger.prototype, 'log')
+      .mockImplementation(() => {});
 
     logger = new DevLogger('TestContext');
   });
@@ -22,7 +24,11 @@ describe('DevLogger', () => {
 
     logger.log(message, optionalParam1, optionalParam2);
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(message, optionalParam1, optionalParam2);
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      message,
+      optionalParam1,
+      optionalParam2,
+    );
     expect(consoleLogSpy).toHaveBeenCalledTimes(1);
   });
 

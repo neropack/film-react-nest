@@ -14,7 +14,11 @@ describe('JsonLogger', () => {
     consoleSpy.mockRestore();
   });
 
-  const expectValidJsonLog = (expectedLevel: string, expectedMessage: any, expectedOptionalParams: any[] = []) => {
+  const expectValidJsonLog = (
+    expectedLevel: string,
+    expectedMessage: any,
+    expectedOptionalParams: any[] = [],
+  ) => {
     expect(consoleSpy).toHaveBeenCalledTimes(1);
     const logArg = consoleSpy.mock.calls[0][0];
     expect(typeof logArg).toBe('string');
@@ -27,13 +31,16 @@ describe('JsonLogger', () => {
       optionalParams: expect.any(Array),
     });
 
-    const formattedMessage = typeof expectedMessage === 'string' ? expectedMessage : JSON.stringify(expectedMessage);
+    const formattedMessage =
+      typeof expectedMessage === 'string'
+        ? expectedMessage
+        : JSON.stringify(expectedMessage);
     expect(parsed.message).toBe(formattedMessage);
 
     expect(parsed.optionalParams).toEqual(
-      expectedOptionalParams.map(param => 
-        typeof param === 'string' ? JSON.stringify(param) : param
-      )
+      expectedOptionalParams.map((param) =>
+        typeof param === 'string' ? JSON.stringify(param) : param,
+      ),
     );
   };
 

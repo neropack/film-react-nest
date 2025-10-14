@@ -96,7 +96,9 @@ describe('FilmsController', () => {
         },
       ];
 
-      (mockFilmsService.getFilmSchedule as jest.Mock).mockResolvedValue(mockSchedule);
+      (mockFilmsService.getFilmSchedule as jest.Mock).mockResolvedValue(
+        mockSchedule,
+      );
 
       const result = await controller.getFilmSchedule(filmId);
 
@@ -109,12 +111,16 @@ describe('FilmsController', () => {
       const invalidFilmId = 'invalid-id';
       const emptySchedule: any[] = [];
 
-      (mockFilmsService.getFilmSchedule as jest.Mock).mockResolvedValue(emptySchedule);
+      (mockFilmsService.getFilmSchedule as jest.Mock).mockResolvedValue(
+        emptySchedule,
+      );
 
       const result = await controller.getFilmSchedule(invalidFilmId);
 
       expect(mockFilmsService.getFilmSchedule).toHaveBeenCalledTimes(1);
-      expect(mockFilmsService.getFilmSchedule).toHaveBeenCalledWith(invalidFilmId);
+      expect(mockFilmsService.getFilmSchedule).toHaveBeenCalledWith(
+        invalidFilmId,
+      );
       expect(result).toEqual(emptySchedule);
     });
   });
