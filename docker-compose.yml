@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
     environment:
       DATABASE_TYPE: ${DATABASE_TYPE}
-      DATABASE_HOST: ${DATABASE_HOST}
+      # DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_HOST: db
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -17,8 +18,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      db:
-        - condition: service_healthy
+      - db
     restart: on-failure
     networks:
       - app-network
@@ -58,7 +58,8 @@ services:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
-      - db_data:/var/lib/postgresql/prac
+      - db_data:/var/lib/postgresql/data
+      - ./backend/test/sql_init:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     networks:
@@ -74,7 +75,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     depends_on:
-      - postgres
+      - db
     networks:
       - app-network
 
