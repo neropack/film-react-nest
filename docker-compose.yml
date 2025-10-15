@@ -34,6 +34,7 @@ services:
       VITE_CDN_URL: /content/afisha
     volumes:
       - frontend_build:/app/dist
+    restart: on-failure
     networks:
       - app-network
 
@@ -47,6 +48,7 @@ services:
       - frontend
     volumes:
       - frontend_build:/var/www
+    restart: on-failure
     networks:
       - app-network
 
@@ -62,6 +64,7 @@ services:
       - ./backend/test/sql_init:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    restart: on-failure
     networks:
       - app-network
 
@@ -74,6 +77,7 @@ services:
       - "8080:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+    restart: on-failure
     depends_on:
       - db
     networks:
