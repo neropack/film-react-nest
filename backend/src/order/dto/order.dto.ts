@@ -1,4 +1,14 @@
-import { IsArray, IsEmail, IsInt, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, Min, ValidateNested } from "class-validator";
+import {
+  IsArray,
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsPhoneNumber,
+  IsString,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 //TODO реализовать DTO для /orders

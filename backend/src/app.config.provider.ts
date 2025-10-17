@@ -6,8 +6,8 @@ export const configProvider = {
   useValue: <AppConfig>{
     //TODO прочесть переменнные среды
     database: {
-      driver: process.env.DATABASE_DRIVER.trim(),
-      url: process.env.DATABASE_URL.trim(),
+      //driver: process.env.DATABASE_DRIVER.trim(),
+      //url: process.env.DATABASE_URL.trim(),
       type: (process.env.DATABASE_TYPE.trim() as 'postgres') || 'postgres',
       host: process.env.DATABASE_HOST.trim(),
       port: parseInt(process.env.DATABASE_PORT.trim()) || 5432,
@@ -23,8 +23,8 @@ export interface AppConfig {
 }
 
 export interface AppConfigDatabase {
-  driver: string;
-  url: string;
+  //driver: string;
+  //url: string;
   type: string;
   host: string;
   port: string | number;

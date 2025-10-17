@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { FilmsRepository } from '../repository/films.repository';
 
 @Injectable()
@@ -20,8 +25,8 @@ export class FilmsService {
 
   async getFilmSchedule(id: string) {
     try {
-      if(!id) throw new BadRequestException('Film ID is required');
-      
+      if (!id) throw new BadRequestException('Film ID is required');
+
       const film = await this.filmRepository.findById(id);
       if (!film) throw new NotFoundException('Film not found');
 

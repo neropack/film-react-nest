@@ -1,15 +1,22 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { FilmsRepository } from '../repository/films.repository';
 import { Order, TicketResult } from './dto/order.dto';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsRepository) { }
+  constructor(private readonly filmsRepository: FilmsRepository) {}
 
   async createOrder(order: Order) {
     try {
       if (!order.email) throw new BadRequestException('Email is required');
-      if (!order.phone) throw new BadRequestException('Phone number is required');
+      if (!order.phone)
+        throw new BadRequestException('Phone number is required');
       if (order.tickets.length === 0)
         throw new BadRequestException('No tickets in order');
 
@@ -17,7 +24,8 @@ export class OrderService {
       const sessionId = order.tickets[0].session;
 
       const film = await this.filmsRepository.findById(filmId);
-      if (!film) throw new NotFoundException(`Film with id ${filmId} not found`);
+      if (!film)
+        throw new NotFoundException(`Film with id ${filmId} not found`);
 
       const sessionIndex = film.schedule.findIndex(
         (session) => session.id === sessionId,
@@ -30,13 +38,15 @@ export class OrderService {
       for (const ticket of order.tickets) {
         if (ticket.row > session.rows || ticket.seat > session.seats) {
           throw new UnprocessableEntityException(
-            `Invalid seat for session ${sessionId}: row <= ${session.rows}, seat <= ${session.seats}`
+            `Invalid seat for session ${sessionId}: row <= ${session.rows}, seat <= ${session.seats}`,
           );
         }
 
         const seatKey = `${ticket.row}-${ticket.seat}`;
         if (seenSeats.has(seatKey)) {
-          throw new UnprocessableEntityException(`Duplicate seat ${seatKey} in order`);
+          throw new UnprocessableEntityException(
+            `Duplicate seat ${seatKey} in order`,
+          );
         }
         seenSeats.add(seatKey);
       }
@@ -68,10 +78,12 @@ export class OrderService {
         items: result,
       };
     } catch (error) {
-      if (error instanceof NotFoundException ||
+      if (
+        error instanceof NotFoundException ||
         error instanceof BadRequestException ||
         error instanceof UnprocessableEntityException ||
-        error instanceof ConflictException) {
+        error instanceof ConflictException
+      ) {
         throw error;
       }
       throw new BadRequestException('Failed to create order');
